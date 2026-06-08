@@ -1,0 +1,6 @@
+{
+  "name": "Le Café Bonne Humeur",
+  "description": "Découvrez Le Café Bonne Humeur à Yamoussoukro, Côte d'Ivoire. Gastronomie ivoirienne et internationale, lounge VIP haut de gamme, cocktails signatures, réservations de table et commandes en ligne.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
