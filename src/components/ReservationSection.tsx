@@ -63,6 +63,27 @@ export default function ReservationSection({ createReservation }: ReservationSec
       });
 
       setBookedTicket(ticket);
+
+      const zoneName = zone === 'vip' ? 'Lounge VIP Impérial' : zone === 'terrasse' ? 'Terrasse Plein Air' : 'Salle Classique';
+      const formattedDate = new Date(date).toLocaleDateString('fr-FR');
+      
+      const whatsappMessage = `Confirmation de Réservation - Le Panier Gourmet
+
+Numéro du client : ${phone}
+Nom du client : ${name}
+Adresse e-mail : ${email || 'Non renseignée'}
+Date : ${formattedDate}
+Heure : ${time}
+Nombre de personnes : ${guests}
+Espace choisi : ${zoneName}`;
+
+      const whatsappUrl = `https://wa.me/2250716195699?text=${encodeURIComponent(whatsappMessage)}`;
+      
+      try {
+        window.open(whatsappUrl, '_blank');
+      } catch (e) {
+        window.location.href = whatsappUrl;
+      }
     }, 1200);
   };
 
@@ -105,7 +126,16 @@ export default function ReservationSection({ createReservation }: ReservationSec
   const whatsappPreviewText = useMemo(() => {
     if (!bookedTicket) return '';
     const zoneName = bookedTicket.zone === 'vip' ? 'Lounge VIP Impérial' : bookedTicket.zone === 'terrasse' ? 'Terrasse Plein Air' : 'Salle Classique';
-    return `Bonjour Le Café Bonne Humeur, je confirme ma réservation au nom de *${bookedTicket.clientName}* pour *${bookedTicket.guests} personnes* le *${new Date(bookedTicket.date).toLocaleDateString('fr-FR')}* à *${bookedTicket.time}* dans la zone *${zoneName}*. Code de validation: *${bookedTicket.id}*`;
+    const formattedDate = new Date(bookedTicket.date).toLocaleDateString('fr-FR');
+    return `Confirmation de Réservation - Le Panier Gourmet
+
+Numéro du client : ${bookedTicket.clientPhone}
+Nom du client : ${bookedTicket.clientName}
+Adresse e-mail : ${bookedTicket.clientEmail || 'Non renseignée'}
+Date : ${formattedDate}
+Heure : ${bookedTicket.time}
+Nombre de personnes : ${bookedTicket.guests}
+Espace choisi : ${zoneName}`;
   }, [bookedTicket]);
 
   return (
@@ -400,13 +430,13 @@ export default function ReservationSection({ createReservation }: ReservationSec
                   {/* Action sharing triggers */}
                   <div className="flex flex-col gap-3 max-w-sm mx-auto">
                     <a
-                      href={`https://api.whatsapp.com/send?text=${encodeURIComponent(whatsappPreviewText)}`}
+                      href={`https://wa.me/2250716195699?text=${encodeURIComponent(whatsappPreviewText)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-5 py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors cursor-pointer"
                     >
                       <Send size={14} />
-                      Confirmer via WhatsApp (+255)
+                      Confirmer via WhatsApp (+225)
                     </a>
                     <button
                       onClick={handleReset}
