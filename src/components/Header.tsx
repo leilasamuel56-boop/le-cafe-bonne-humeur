@@ -27,7 +27,7 @@ export default function Header({
   logoText = 'Le Café Bonne Humeur',
   brandColor = '#D4AF37',
   brandHoverColor = '#B8902A',
-  contactPhone = '01 41 92 33 96',
+  contactPhone = '07 16 19 56 99',
   openingHours = '11h00 à 02h00'
 }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

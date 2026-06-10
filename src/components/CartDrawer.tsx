@@ -40,7 +40,7 @@ export default function CartDrawer({
 
   // Address and contact details
   const [customerName, setCustomerName] = useState('Curtis Kouadio');
-  const [customerPhone, setCustomerPhone] = useState('01 41 92 33 96');
+  const [customerPhone, setCustomerPhone] = useState('07 16 19 56 99');
   const [customerEmail, setCustomerEmail] = useState('kouadiocurtis24@gmail.com');
   const [paymentMethod, setPaymentMethod] = useState<'Wave' | 'Orange Money' | 'MTN MoMo'>('Wave');
 
@@ -105,7 +105,7 @@ Détails de la commande :
 ${itemsList}
 Total : ${finalTotal.toLocaleString('fr-FR')} FCFA`;
 
-        const whatsappUrl = `https://wa.me/2250141923396?text=${encodeURIComponent(whatsappMessage)}`;
+        const whatsappUrl = `https://wa.me/2250716195699?text=${encodeURIComponent(whatsappMessage)}`;
         
         try {
           window.open(whatsappUrl, '_blank');
@@ -547,7 +547,7 @@ Total : ${finalTotal.toLocaleString('fr-FR')} FCFA`;
 
                     {latestOrder && (
                       <a
-                        href={`https://wa.me/2250141923396?text=${encodeURIComponent(
+                        href={`https://wa.me/2250716195699?text=${encodeURIComponent(
                           `Méthode choisie : ${latestOrder.deliveryType === 'livraison' ? `LIVRAISON (Adresse : ${deliveryAddress || 'Non spécifiée'})` : 'RETRAIT SUR PLACE'}\n\nNom du client : ${latestOrder.clientName}\n\nNuméro de téléphone : ${latestOrder.clientPhone}\n\nAdresse mail : ${latestOrder.clientEmail || 'Non renseignée'}\n\nMoyen de paiement : ${latestOrder.paymentMethod || 'Wave'}\n\n------------------\nDétails de la commande :\n${latestOrder.items.map(it => `- ${it.name} (x${it.quantity})`).join('\n')}\nTotal : ${latestOrder.total.toLocaleString('fr-FR')} FCFA`
                         )}`}
                         target="_blank"

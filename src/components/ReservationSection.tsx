@@ -156,10 +156,10 @@ export default function ReservationSection({ createReservation }: ReservationSec
                 <p className="text-sm text-stone-300">Notre hotline conciergerie VIP est ouverte 7j/7.</p>
               </div>
               <a
-                href="tel:+2250141923396"
+                href="tel:+2250716195699"
                 className="px-5 py-2.5 rounded-lg bg-stone-900 border border-stone-700 hover:border-[#D4AF37] text-stone-200 transition-colors flex items-center gap-2 text-xs uppercase tracking-wider font-bold"
               >
-                <Phone size={14} className="text-[#D4AF37]" /> Call 01 41 92 33 96
+                <Phone size={14} className="text-[#D4AF37]" /> Call 07 16 19 56 99
               </a>
             </div>
           </div>
@@ -285,7 +285,7 @@ export default function ReservationSection({ createReservation }: ReservationSec
                         <label className="text-[10px] text-stone-400 uppercase tracking-widest font-semibold block">Téléphone mobile</label>
                         <input
                           type="tel"
-                          placeholder="Ex: 01 41 92 33 96"
+                          placeholder="Ex: 07 16 19 56 99"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
                           className="w-full bg-stone-900/50 border border-stone-800 px-4 py-2.5 rounded-lg text-sm text-stone-200 focus:border-[#D4AF37] focus:outline-none"

@@ -17,7 +17,7 @@ export default function WhatsAppFloat() {
     { q: '📍 Quelle est l\'adresse exacte ?', a: '📍 Nous sommes situés sur le grand boulevard principal à Yamoussoukro, à moins de 5 minutes de l\'incomparable Basilique Notre-Dame de la Paix. Vous êtes les bienvenus !' },
     { q: '⏰ Quels sont vos horaires ?', a: '⏰ Nous sommes ouverts 7 jours sur 7, de 11h00 du matin à 02h00 de la nuit pour le lounge VIP et les cocktails signatures.' },
     { q: '🛵 Livrez-vous au quartier Millionnaire ?', a: '🛵 Oui, absolument ! Nous livrons dans tout Yamoussoukro (Millionnaire, Sopim, Dioulabougou, INPHB) pour un tarif fixe de 1500 FCFA. Les plats arrivent chauds sous couverture hermétique.' },
-    { q: '👑 Comment privatiser le Lounge VIP ?', a: '👑 C\'est un plaisir ! Pour privatiser le Lounge VIP pour un anniversaire ou une soirée d\'affaires d\'exception, veuillez remplir notre formulaire de "Moments VIP" ou appeler fissa le +225 01 41 92 33 96.' }
+    { q: '👑 Comment privatiser le Lounge VIP ?', a: '👑 C\'est un plaisir ! Pour privatiser le Lounge VIP pour un anniversaire ou une soirée d\'affaires d\'exception, veuillez remplir notre formulaire de "Moments VIP" ou appeler fissa le +225 07 16 19 56 99.' }
   ];
 
   const handleSendMessage = (textToSend: string) => {
@@ -34,7 +34,7 @@ export default function WhatsAppFloat() {
 
     // Simulated responsive automation reply
     setTimeout(() => {
-      let replyText = 'Merci de nous écrire ! Un gestionnaire de notre conciergerie VIP de Yamoussoukro va se connecter d\'un instant à l\'autre. Vous pouvez aussi nous appeler directement au +225 01 41 92 33 96 pour une réponse en 3 secondes ! 🌟';
+      let replyText = 'Merci de nous écrire ! Un gestionnaire de notre conciergerie VIP de Yamoussoukro va se connecter d\'un instant à l\'autre. Vous pouvez aussi nous appeler directement au +225 07 16 19 56 99 pour une réponse en 3 secondes ! 🌟';
 
       // Find if pre-written questions were selected
       const queryFound = preWrittenQueries.find((p) => p.q === textToSend);
