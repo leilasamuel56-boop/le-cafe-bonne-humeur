@@ -245,7 +245,7 @@ export default function EventsSection({ bookEvent }: EventsSectionProps) {
                         <span className="text-[10px] text-stone-450 uppercase tracking-widest font-bold block">Mobile</span>
                         <input
                           type="tel"
-                          placeholder="Ex: 07 16 19 56 99"
+                          placeholder="Ex: 01 41 92 33 96"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
                           className="w-full bg-stone-900 border border-stone-850 px-3.5 py-2.5 rounded-lg text-xs text-stone-200 focus:outline-none focus:border-[#D4AF37]"
@@ -299,7 +299,7 @@ export default function EventsSection({ bookEvent }: EventsSectionProps) {
                     </button>
                     
                     <p className="text-[10px] text-stone-500 text-center leading-relaxed">
-                      Remarque : Un sms d'attribution vous parviendra. Pour toute modification ou annulation d'événement, veuillez contacter le +225 07 16 19 56 99.
+                      Remarque : Un sms d'attribution vous parviendra. Pour toute modification ou annulation d'événement, veuillez contacter le +225 01 41 92 33 96.
                     </p>
                   </motion.form>
                 ) : (

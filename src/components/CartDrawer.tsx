@@ -15,7 +15,7 @@ interface CartDrawerProps {
   updateCartQuantity: (itemId: string, qty: number) => void;
   removeFromCart: (itemId: string) => void;
   applyPromoCode: (code: string) => { success: boolean; message: string };
-  checkout: (phone: string, name: string, email?: string) => Order | null;
+  checkout: (phone: string, name: string, email?: string, paymentMethod?: string) => Order | null;
   orders: Order[];
 }
 
@@ -40,8 +40,9 @@ export default function CartDrawer({
 
   // Address and contact details
   const [customerName, setCustomerName] = useState('Curtis Kouadio');
-  const [customerPhone, setCustomerPhone] = useState('07 16 19 56 99');
+  const [customerPhone, setCustomerPhone] = useState('01 41 92 33 96');
   const [customerEmail, setCustomerEmail] = useState('kouadiocurtis24@gmail.com');
+  const [paymentMethod, setPaymentMethod] = useState<'Wave' | 'Orange Money' | 'MTN MoMo'>('Wave');
 
   // Interactive checkout steps
   const [activeStep, setActiveStep] = useState<'cart' | 'checkout' | 'tracking'>('cart');
@@ -78,10 +79,39 @@ export default function CartDrawer({
     // Simulate luxury order setup on the terminal
     setTimeout(() => {
       setPlacingOrder(false);
-      const newOrder = checkout(customerPhone, customerName, customerEmail);
+      const newOrder = checkout(customerPhone, customerName, customerEmail, paymentMethod);
       if (newOrder) {
         setCurrentTrackedOrder(newOrder);
         setActiveStep('tracking');
+
+        // Integration WhatsApp après commande
+        const methodeChoisie = deliveryType === 'livraison'
+          ? `LIVRAISON (Adresse : ${deliveryAddress || 'Non spécifiée'})`
+          : 'RETRAIT SUR PLACE';
+        const itemsList = cart.map(item => `- ${item.menuItem.name} (x${item.quantity})`).join('\n');
+
+        const whatsappMessage = `Méthode choisie : ${methodeChoisie}
+
+Nom du client : ${customerName}
+
+Numéro de téléphone : ${customerPhone}
+
+Adresse mail : ${customerEmail || 'Non renseignée'}
+
+Moyen de paiement : ${paymentMethod}
+
+------------------
+Détails de la commande :
+${itemsList}
+Total : ${finalTotal.toLocaleString('fr-FR')} FCFA`;
+
+        const whatsappUrl = `https://wa.me/2250141923396?text=${encodeURIComponent(whatsappMessage)}`;
+        
+        try {
+          window.open(whatsappUrl, '_blank');
+        } catch (e) {
+          window.location.href = whatsappUrl;
+        }
       }
     }, 1800);
   };
@@ -362,10 +392,29 @@ export default function CartDrawer({
                       </div>
                     </div>
 
-                    {/* Quick Payment Advice badge */}
-                    <div className="p-3.5 bg-stone-900/70 rounded-xl border border-stone-800 text-xs text-stone-400 space-y-1">
-                      <p className="font-bold text-stone-200 uppercase tracking-wider text-[10px]">💵 Mode de Paiement</p>
-                      <p className="text-[11px]">Paiement à la livraison / retrait en espèces ou Mobile Money (Orange Money, Wave, MTN MoMo) pour une flexibilité totale.</p>
+                    {/* Dropdown menu for Payment Method selection */}
+                    <div className="space-y-2 pt-2 border-t border-stone-850">
+                      <label className="text-[10px] text-stone-400 uppercase tracking-widest font-bold block">💵 Moyen de Paiement Mobile Money</label>
+                      <div className="relative">
+                        <select
+                          value={paymentMethod}
+                          onChange={(e) => setPaymentMethod(e.target.value as 'Wave' | 'Orange Money' | 'MTN MoMo')}
+                          className="w-full bg-stone-900 border border-stone-800 hover:border-stone-700 p-3 rounded-xl text-xs text-stone-200 font-medium focus:border-[#D4AF37] focus:outline-none focus:ring-0 appearance-none cursor-pointer pr-10"
+                          id="checkout-payment-method-select"
+                        >
+                          <option value="Wave" className="bg-stone-950 text-stone-300">👋 Wave</option>
+                          <option value="Orange Money" className="bg-stone-950 text-stone-300">🍊 Orange Money</option>
+                          <option value="MTN MoMo" className="bg-stone-950 text-stone-300">💛 MTN MoMo (Mobile Money)</option>
+                        </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-[#D4AF37]">
+                          <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                          </svg>
+                        </div>
+                      </div>
+                      <p className="text-[10px] text-stone-500 leading-relaxed">
+                        Vous pourrez régler votre commande de <span className="text-[#D4AF37] font-semibold">{finalTotal.toLocaleString('fr-FR')} FCFA</span> directement sur votre compte mobile <span className="text-stone-300 font-bold">{paymentMethod}</span> à la réception.
+                      </p>
                     </div>
                   </motion.div>
                 )}
@@ -390,7 +439,14 @@ export default function CartDrawer({
 
                     {/* Order summary recap */}
                     <div className="space-y-2.5 p-3.5 bg-stone-900/30 border border-stone-850 rounded-xl max-h-40 overflow-y-auto">
-                      <p className="text-[10px] uppercase text-stone-500 font-bold">Produits commandés :</p>
+                      <div className="flex justify-between items-center border-b border-stone-850/50 pb-1.5">
+                        <p className="text-[10px] uppercase text-stone-500 font-bold">Produits commandés :</p>
+                        {latestOrder.paymentMethod && (
+                          <span className="text-[10px] font-semibold text-[#D4AF37] bg-[#D4AF37]/10 px-2 py-0.5 rounded">
+                            💸 {latestOrder.paymentMethod}
+                          </span>
+                        )}
+                      </div>
                       {latestOrder.items.map((it, idx) => (
                         <div key={idx} className="flex justify-between items-center text-xs">
                           <span className="text-stone-305 truncate max-w-[200px]">{it.name} <strong className="text-[#D4AF37]">x{it.quantity}</strong></span>
@@ -489,9 +545,22 @@ export default function CartDrawer({
                       <span>Vous pouvez modifier le statut de cette commande de façon instantanée en ouvrant l'<strong>Espace Administrateur</strong> (Le bouton "Dashboard" flottant du menu supérieur).</span>
                     </div>
 
+                    {latestOrder && (
+                      <a
+                        href={`https://wa.me/2250141923396?text=${encodeURIComponent(
+                          `Méthode choisie : ${latestOrder.deliveryType === 'livraison' ? `LIVRAISON (Adresse : ${deliveryAddress || 'Non spécifiée'})` : 'RETRAIT SUR PLACE'}\n\nNom du client : ${latestOrder.clientName}\n\nNuméro de téléphone : ${latestOrder.clientPhone}\n\nAdresse mail : ${latestOrder.clientEmail || 'Non renseignée'}\n\nMoyen de paiement : ${latestOrder.paymentMethod || 'Wave'}\n\n------------------\nDétails de la commande :\n${latestOrder.items.map(it => `- ${it.name} (x${it.quantity})`).join('\n')}\nTotal : ${latestOrder.total.toLocaleString('fr-FR')} FCFA`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-colors shadow-lg shadow-emerald-950/20 text-center cursor-pointer"
+                      >
+                        💬 Ouvrir dans WhatsApp
+                      </a>
+                    )}
+
                     <button
                       onClick={() => setActiveStep('cart')}
-                      className="w-full py-2.5 rounded-lg border border-stone-700 hover:border-stone-500 text-xs font-bold uppercase tracking-wider text-stone-300 transition-colors"
+                      className="w-full py-2.5 rounded-lg border border-stone-700 hover:border-stone-500 text-xs font-bold uppercase tracking-wider text-stone-300 transition-colors cursor-pointer"
                     >
                       Retour au Panier
                     </button>

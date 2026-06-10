@@ -340,7 +340,7 @@ export default function LoyaltySection({
                     <span className="text-[10px] text-stone-400 font-bold uppercase block tracking-wider">Téléphone Mobile</span>
                     <input
                       type="tel"
-                      placeholder="Ex: 07 16 19 56 99"
+                      placeholder="Ex: 01 41 92 33 96"
                       value={phoneInput}
                       onChange={(e) => setPhoneInput(e.target.value)}
                       className="w-full bg-stone-900 border border-stone-850 px-4 py-2.5 rounded-lg text-xs text-stone-250 font-mono focus:outline-none focus:border-[#D4AF37]"

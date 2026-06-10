@@ -1632,6 +1632,11 @@ export default function AdminPanel({
                             }`}>
                               {order.deliveryType}
                             </span>
+                            {order.paymentMethod && (
+                              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/10 shrink-0">
+                                💳 {order.paymentMethod}
+                              </span>
+                            )}
                           </div>
 
                           <p className="text-xs text-stone-450 mt-2.5 leading-relaxed bg-[#0c0c0c] p-2.5 rounded-lg border border-stone-900 font-medium">

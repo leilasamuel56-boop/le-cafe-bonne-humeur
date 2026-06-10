@@ -35,7 +35,7 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   openingHoursWeekday: '7j / 7 — Ouvert de 11h00 à 02h00',
   openingHoursWeekend: 'Weekend Prolongé de 11h00 à 04h00',
   
-  contactPhone: '07 16 19 56 99',
+  contactPhone: '01 41 92 33 96',
   contactAddress: 'Quartier Millionnaire, Face à la Basilique, Yamoussoukro',
   contactEmail: 'contact@cafe-bonnehumeur.ci',
   
@@ -253,7 +253,7 @@ export function useAppState() {
     const defaultUser: LoyaltyAccount = {
       id: 'usr-99',
       clientName: 'Curtis Kouadio',
-      clientPhone: '07 16 19 56 99',
+      clientPhone: '01 41 92 33 96',
       clientEmail: 'kouadiocurtis24@gmail.com',
       birthday: '1995-10-12',
       points: 1550, // Let them have some initial points for reward demonstration
@@ -491,7 +491,7 @@ export function useAppState() {
   };
 
   // Checkout order
-  const checkout = (phone: string, name: string, email?: string): Order | null => {
+  const checkout = (phone: string, name: string, email?: string, paymentMethod?: string): Order | null => {
     if (cart.length === 0) return null;
 
     const cartTotal = cart.reduce((acc, i) => acc + i.menuItem.price * i.quantity, 0);
@@ -519,7 +519,8 @@ export function useAppState() {
       status: 'recue',
       requestedAt: new Date().toISOString(),
       pointsEarned,
-      discountApplied: discount
+      discountApplied: discount,
+      paymentMethod: paymentMethod || 'Wave'
     };
 
     setOrders((prev) => [newOrder, ...prev]);

@@ -58,6 +58,7 @@ export interface Order {
   requestedAt: string;
   pointsEarned: number;
   discountApplied: number;
+  paymentMethod?: string;
 }
 
 export interface LoyaltyAccount {
